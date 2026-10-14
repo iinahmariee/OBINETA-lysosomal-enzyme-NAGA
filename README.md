@@ -2,6 +2,12 @@
 
 Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R to analyze a human lysosomal enzyme.
 
+**Name:** Obiñeta, Inah Marie  
+
+**Date Completed:** October 14, 2026  
+
+**Gene:** NAGA (alpha-N-acetylgalactosaminidase)
+
 ## Enzyme summary
 
 - **Enzyme:** alpha-N-acetylgalactosaminidase (also called alpha-galactosidase B)
@@ -9,14 +15,6 @@ Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R t
 - **NCBI protein record:** [NP_000253.1](https://www.ncbi.nlm.nih.gov/protein/NP_000253.1) (human RefSeq precursor, 411 aa)
 - **Function:** A lysosomal hydrolase that removes alpha-N-acetylgalactosaminyl (N-acetylgalactosamine) groups from glycoconjugates such as glycoproteins and glycolipids, so the sugar chains can be broken down and recycled.
 
-## Repository contents
-
-- `lysosomal_enzyme_analysis.R`: R script (only `gene` and `accession` were edited)
-- `data/NAGA.fasta`: protein sequence downloaded from NCBI
-- `results/NAGA_summary.csv`: protein length and number of potential motifs
-- `results/NAGA_amino_acid_counts.csv`: amino acid counts and percentages
-- `results/NAGA_motif_positions.csv`: positions and sequences of N-X-S/T motifs
-- `figures/`: Figures 1 and 2 below
 
 ## Results
 
@@ -67,9 +65,13 @@ Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R t
 
 ![Amino acid composition of NAGA](figures/NAGA_amino_acid_composition.png)
 
+- Figure 1 shows how many times each of the 20 amino acids appears in the 411-aa NAGA precursor. Leucine is the most abundant (48), followed by aspartate and glycine (30 each). Histidine (7) and cysteine (9) are the least common.
+
 **Figure 2. Positions of potential N-glycosylation motifs (N-X-S/T, X is not P)**
 
 ![Potential N-glycosylation motifs in NAGA](figures/NAGA_potential_N_glycosylation.png)
+
+- Figure 2 maps the 5 potential N-X-S/T motifs along the protein (positions 124, 177, 201, 359, and 385). Three lie in the middle region and two near the C-terminal end. These are only potential sites and do not prove that glycans are attached.
 
 ## Answers
 
