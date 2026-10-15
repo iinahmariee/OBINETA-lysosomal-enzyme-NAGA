@@ -20,7 +20,7 @@ Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R t
 - **Function:** A lysosomal hydrolase that removes alpha-N-acetylgalactosaminyl (N-acetylgalactosamine) groups from glycoconjugates such as glycoproteins and glycolipids, so the sugar chains can be broken down and recycled.
 
 
-## Step-by-step workflow (what I ran and what it produced)
+## Step-by-step workflow 
 
 The whole analysis was run in RStudio (R 4.3.2) using `lysosomal_enzyme_analysis.R`. The sequence was downloaded from NCBI **by the script itself** (using the `rentrez` package), not copied by hand. Each step below shows the code, then the actual output I got.
 
