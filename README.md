@@ -66,7 +66,7 @@ The header matches the NCBI record, which confirms the correct protein was downl
 
 The R console below shows the script printing `Downloading NP_000253.1 from NCBI Protein...` and running the `entrez_fetch` call:
 
-![R console showing the NCBI download](screenshots/console_download.png)
+![R console showing the NCBI download](figures/screenshots_console_output.png)
 
 ### Step 5. Count the sequence length and amino acids
 
