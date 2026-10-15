@@ -26,7 +26,7 @@ The whole analysis was run in RStudio (R 4.3.2) using `lysosomal_enzyme_analysis
 
 ### Step 1. Choose the enzyme and record the accession
 
-I chose *NAGA* because it was not taken by other classmates. On NCBI Protein I searched `NAGA Homo sapiens` and selected the full-length human RefSeq record **NP_000253.1** (411 aa, MANE Select). Other NAGA records, such as the GenBank clone CAG30413.1, were not used because they are not RefSeq (NP_) entries.
+I chose *NAGA*  then I searched `NAGA Homo sapiens` and selected the full-length human RefSeq record **NP_000253.1** (411 aa, MANE Select). Other NAGA records, such as the GenBank clone CAG30413.1, were not used because they are not RefSeq (NP_) entries.
 
 ### Step 2. Edit the two lines at the top of the script
 
