@@ -208,17 +208,3 @@ Lysosomal enzymes are made in the endoplasmic reticulum and pass through the Gol
 **5. What could happen in the cell if your enzyme did not work properly?**
 
 If NAGA activity were lost or reduced, its substrates would not be fully broken down and would accumulate in lysosomes. Mutations in *NAGA* cause Schindler disease (types I and II; type II is also called Kanzaki disease), which is a lysosomal storage disorder.
-
-## Notes and limitations
-
-- N-X-S/T is a potential N-glycosylation motif, not confirmation of a glycan or a mannose-6-phosphate tag.
-- Protein sequence analysis does not directly measure enzyme activity.
-- The analyzed sequence is the full precursor (including the signal peptide), so positions use precursor numbering.
-
-## Reproduce
-
-```
-install.packages(c("rentrez", "ggplot2"))
-```
-
-Then run `Rscript lysosomal_enzyme_analysis.R` from the repository folder.
