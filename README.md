@@ -8,23 +8,129 @@ Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R t
 
 **Gene:** NAGA (alpha-N-acetylgalactosaminidase)
 
+
 ## Enzyme summary
 
 - **Enzyme:** alpha-N-acetylgalactosaminidase (also called alpha-galactosidase B)
+
 - **Gene symbol:** *NAGA* (NCBI Gene ID 4668)
+
 - **NCBI protein record:** [NP_000253.1](https://www.ncbi.nlm.nih.gov/protein/NP_000253.1) (human RefSeq precursor, 411 aa)
+
 - **Function:** A lysosomal hydrolase that removes alpha-N-acetylgalactosaminyl (N-acetylgalactosamine) groups from glycoconjugates such as glycoproteins and glycolipids, so the sugar chains can be broken down and recycled.
 
+## Repository contents
+
+- `lysosomal_enzyme_analysis.R`: R script (only `gene` and `accession` were edited)
+- `data/NAGA.fasta`: protein sequence downloaded from NCBI
+- `results/NAGA_summary.csv`: protein length and number of potential motifs
+- `results/NAGA_amino_acid_counts.csv`: amino acid counts and percentages
+- `results/NAGA_motif_positions.csv`: positions and sequences of N-X-S/T motifs
+- `figures/`: Figures 1 and 2 below
+
+## Step-by-step workflow (what I ran and what it produced)
+
+The whole analysis was run in RStudio (R 4.3.2) using `lysosomal_enzyme_analysis.R`. The sequence was downloaded from NCBI **by the script itself** (using the `rentrez` package), not copied by hand. Each step below shows the code, then the actual output I got.
+
+### Step 1. Choose the enzyme and record the accession
+
+I chose *NAGA* because it was not taken by other classmates. On NCBI Protein I searched `NAGA Homo sapiens` and selected the full-length human RefSeq record **NP_000253.1** (411 aa, MANE Select). Other NAGA records, such as the GenBank clone CAG30413.1, were not used because they are not RefSeq (NP_) entries.
+
+### Step 2. Edit the two lines at the top of the script
+
+```r
+gene <- "NAGA"
+accession <- "NP_000253.1"
+```
+
+Nothing else in the script was changed.
+
+### Step 3. Install packages (once) and check them
+
+```r
+install.packages(c("rentrez", "ggplot2"))
+```
+
+The script then checks that both packages are available. It stops with an error if one is missing, so a successful run confirms both were installed.
+
+### Step 4. Download the protein sequence from NCBI through R
+
+```r
+fasta <- rentrez::entrez_fetch(db = "protein", id = accession,
+                               rettype = "fasta", retmode = "text")
+writeLines(fasta, file.path("data", paste0(gene, ".fasta")))
+```
+
+This calls the NCBI Protein database with the accession and saves the result as `data/NAGA.fasta`. The script also checks that exactly one FASTA record was returned. The first lines of the downloaded file are:
+
+```
+>NP_000253.1 alpha-N-acetylgalactosaminidase precursor [Homo sapiens]
+MLLKTVLLLGHVAQVLMLDNGLLQTPPMGWLAWERFRCNINCDEDPKNCISEQLFMEMADRMAQDGWRDM
+GYTYLNIDDCWIGGRDASGRLMPDPKRFPHGIPFLADYVHSLGLKLGIYADMGNFTCMGYPGTTLDKVVQ
+...
+```
+
+The header matches the NCBI record, which confirms the correct protein was downloaded.
+
+### Step 5. Count the sequence length and amino acids
+
+```r
+amino_acids <- strsplit(protein, "", fixed = TRUE)[[1]]
+protein_length <- length(amino_acids)
+counts <- table(factor(amino_acids, levels = standard_aa))
+```
+
+Result: the protein is **411 amino acids** long, matching the NCBI record. The five most common amino acids printed in the R console were:
+
+```
+ amino_acid count percent
+          L    48   11.68
+          D    30    7.30
+          G    30    7.30
+          A    26    6.33
+          I    25    6.08
+```
+
+The full counts for all 20 amino acids are saved in `results/NAGA_amino_acid_counts.csv`.
+
+### Step 6. Search for potential N-glycosylation motifs
+
+```r
+positions <- i[amino_acids[i] == "N" &
+               amino_acids[i + 1L] %in% setdiff(standard_aa, "P") &
+               amino_acids[i + 2L] %in% c("S", "T")]
+```
+
+The code looks for every asparagine (N) followed by any amino acid except proline, then a serine (S) or threonine (T). It found **5 motifs** (positions 124, 177, 201, 359, 385; see the tables below). The console summary printed:
+
+```
+  gene   accession length_amino_acids potential_N_glycosylation_motifs
+1 NAGA NP_000253.1                411                                5
+```
+
+As a check, I also searched the downloaded FASTA sequence separately and found the same 5 positions.
+
+### Step 7. Save the tables and make the figures
+
+The script wrote three CSV files to `results/` and two figures to `figures/` (Figures 1 and 2 below). The console ended with `Files saved in data/, results/, and figures/.`, which confirms the run finished without errors.
+
+### Output files
+
+| Step | File produced |
+|---|---|
+| 4 | `data/NAGA.fasta` |
+| 5-6 | `results/NAGA_summary.csv`, `results/NAGA_amino_acid_counts.csv`, `results/NAGA_motif_positions.csv` |
+| 7 | `figures/NAGA_amino_acid_composition.png`, `figures/NAGA_potential_N_glycosylation.png` |
 
 ## Results
 
-**Summary** 
+**Summary** (`results/NAGA_summary.csv`)
 
 | gene | accession | length_amino_acids | potential_N_glycosylation_motifs |
 |------|-----------|--------------------|----------------------------------|
 | NAGA | NP_000253.1 | 411 | 5 |
 
-**Potential N-glycosylation motifs** 
+**Potential N-glycosylation motifs** (`results/NAGA_motif_positions.csv`)
 
 | position | motif |
 |----------|-------|
@@ -34,7 +140,7 @@ Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R t
 | 359 | NFT |
 | 385 | NFT |
 
-**Amino acid counts** 
+**Amino acid counts** (`results/NAGA_amino_acid_counts.csv`)
 
 | amino_acid | count | percent |
 |------------|-------|---------|
@@ -65,13 +171,15 @@ Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R t
 
 ![Amino acid composition of NAGA](figures/NAGA_amino_acid_composition.png)
 
-- Figure 1 shows how many times each of the 20 amino acids appears in the 411-aa NAGA precursor. Leucine is the most abundant (48), followed by aspartate and glycine (30 each). Histidine (7) and cysteine (9) are the least common.
+*Figure 1 shows how many times each of the 20 amino acids appears in the 411-aa NAGA precursor. Leucine is the most abundant (48), followed by aspartate and glycine (30 each). Histidine (7) and cysteine (9) are the least common.*
+
+*Explanation:* This bar chart shows how many times each of the 20 amino acids appears in the 411-residue NAGA precursor. Leucine (L) is the most abundant at 48 residues (11.68%), followed by aspartate (D) and glycine (G) at 30 each (7.30%), alanine (A) at 26 (6.33%), and isoleucine (I) and serine (S) at 25 each (6.08%). The least common are histidine (H, 7; 1.70%) and cysteine (C, 9; 2.19%). The composition describes the sequence only and does not show how the protein folds or how active it is.
 
 **Figure 2. Positions of potential N-glycosylation motifs (N-X-S/T, X is not P)**
 
 ![Potential N-glycosylation motifs in NAGA](figures/NAGA_potential_N_glycosylation.png)
 
-- Figure 2 maps the 5 potential N-X-S/T motifs along the protein (positions 124, 177, 201, 359, and 385). Three lie in the middle region and two near the C-terminal end. These are only potential sites and do not prove that glycans are attached.
+*Figure 2 maps the 5 potential N-X-S/T motifs along the protein (positions 124, 177, 201, 359, and 385). Three lie in the middle region and two near the C-terminal end. These are only potential sites and do not prove that glycans are attached.*
 
 ## Answers
 
