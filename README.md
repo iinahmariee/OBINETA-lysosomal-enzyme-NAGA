@@ -4,7 +4,7 @@ Individual lab activity for Cell & Molecular Biology, using NCBI Protein and R t
 
 **Name:** Obiñeta, Inah Marie  
 
-**Date Completed:** October 14, 2026  
+**Date Completed:** October 15, 2026  
 
 **Gene:** NAGA (alpha-N-acetylgalactosaminidase)
 
